@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -21,39 +21,35 @@ const styles = StyleSheet.create({
   },
 });
 
-class EventForm extends Component {
-  state = {
-    title: null,
-    date: "",
+const EventForm = ({ navigation }) => {
+  const [title, setTitle] = useState(null);
+  const [date, setDate] = useState("");
+
+  const handleAddPress = () => {
+    console.log(date);
+    navigation.navigate("List");
   };
 
-  handleAddPress = () => {
-    console.log(this.state);
-    this.props.navigation.navigate("List");
+  const handleChangeTitle = (value) => {
+    setTitle(value);
   };
 
-  handleChangeTitle = (value) => {
-    this.setState({ title: value });
-  };
-
-  render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <View style={styles.fieldContainer}>
-          <TextInput
-            style={styles.text}
-            placeholder="Event title"
-            spellCheck={false}
-            value={this.state.title}
-            onChangeText={this.handleChangeTitle}
-          />
-        </View>
-        <TouchableHighlight onPress={this.handleAddPress}>
-          <Text>Add</Text>
-        </TouchableHighlight>
+  return (
+    <View style={{ flex: 1 }}>
+      <View style={styles.fieldContainer}>
+        <TextInput
+          style={styles.text}
+          placeholder="Event title"
+          spellCheck={false}
+          value={title}
+          onChangeText={handleChangeTitle}
+        />
       </View>
-    );
-  }
-}
+      <TouchableHighlight onPress={handleAddPress}>
+        <Text>Add</Text>
+      </TouchableHighlight>
+    </View>
+  );
+};
 
 export default EventForm;
