@@ -4,6 +4,8 @@ import ActionButton from "react-native-action-button";
 
 import EventCard from "./EventCard";
 
+import { getEvents } from "./api";
+
 const styles = StyleSheet.create({
   list: {
     flex: 1,
@@ -27,11 +29,7 @@ class EventList extends Component {
       });
     }, 1000);
 
-    const events = require("./db.json").events.map((e) => ({
-      ...e,
-      date: new Date(e.date),
-    }));
-    this.setState({ events });
+    getEvents().then((events) => this.setState({ events }));
   }
 
   handleAddEvent = () => {
