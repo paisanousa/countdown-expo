@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function EventCard({ event }) {
+const EventCard = ({ event }) => {
   const { days, hours, minutes, seconds } = getCountdownParts(event.date);
 
   return (
@@ -85,7 +85,9 @@ export default function EventCard({ event }) {
       </View>
     </View>
   );
-}
+};
+
+export default EventCard;
 
 EventCard.propTypes = {
   event: PropTypes.shape({
