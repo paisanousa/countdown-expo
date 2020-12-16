@@ -1,48 +1,10 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableHighlight,
-  TextInput,
-  StyleSheet,
-} from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import styled from "styled-components";
+
 import { formatDateTime, saveEvent } from "./api";
 
-const styles = StyleSheet.create({
-  fieldContainer: {
-    marginTop: 20,
-    marginBottom: 20,
-    backgroundColor: "#fff",
-  },
-  text: {
-    height: 40,
-    margin: 0,
-    marginLeft: 7,
-    marginRight: 7,
-    paddingLeft: 10,
-  },
-  borderTop: {
-    borderColor: "#edeeef",
-    borderTopWidth: 0.5,
-  },
-  button: {
-    height: 50,
-    backgroundColor: "#48BBEC",
-    borderColor: "#48BBEC",
-    alignSelf: "stretch",
-    margin: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-  },
-});
-
-const EventForm = ({ navigation }) => {
+export default function EventForm({ navigation }) {
   const [title, setTitle] = useState(null);
   const [date, setDate] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -71,17 +33,15 @@ const EventForm = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.fieldContainer}>
-        <TextInput
-          style={styles.text}
+    <Form>
+      <Container>
+        <Title
           placeholder="Event title"
           spellCheck={false}
           value={title}
           onChangeText={handleChangeTitle}
         />
-        <TextInput
-          style={[styles.text, styles.borderTop]}
+        <Date
           placeholder="Event date"
           spellCheck={false}
           value={formatDateTime(date.toString())}
@@ -94,12 +54,54 @@ const EventForm = ({ navigation }) => {
           onConfirm={handleDatePicked}
           onCancel={handleDatePickerHide}
         />
-      </View>
-      <TouchableHighlight onPress={handleAddPress} style={styles.button}>
-        <Text style={styles.buttonText}>Add</Text>
-      </TouchableHighlight>
-    </View>
+      </Container>
+      <Button onPress={handleAddPress}>
+        <ButtonText>Add</ButtonText>
+      </Button>
+    </Form>
   );
-};
+}
 
-export default EventForm;
+const Form = styled.View`
+  flex: 1;
+`;
+
+const Container = styled.View`
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #fff;
+`;
+
+const Title = styled.TextInput`
+  height: 40px;
+  margin: 0px;
+  margin-left: 7px;
+  margin-right: 7px;
+  padding-left: 10px;
+`;
+
+const Date = styled.TextInput`
+  height: 40px;
+  margin: 0px;
+  margin-left: 7px;
+  margin-right: 7px;
+  padding-left: 10px;
+  border-color: #edeeef;
+  border-top-width: 0.5px;
+`;
+
+const Button = styled.TouchableHighlight`
+  height: 50px;
+  background-color: #48bbec;
+  border-color: #48bbec;
+  align-self: stretch;
+  margin: 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+`;
+
+const ButtonText = styled.Text`
+  color: #fff;
+  font-size: 18px;
+`;
