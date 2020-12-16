@@ -1,20 +1,11 @@
 import React, { Component } from "react";
-import { FlatList, StyleSheet } from "react-native";
 import ActionButton from "react-native-action-button";
+import styled from "styled-components";
 
 import EventCard from "./EventCard";
-
 import { getEvents } from "./api";
 
-const styles = StyleSheet.create({
-  list: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: "#F3F3F3",
-  },
-});
-
-class EventList extends Component {
+export default class EventList extends Component {
   state = {
     events: [],
   };
@@ -40,20 +31,19 @@ class EventList extends Component {
 
   render() {
     return [
-      <FlatList
+      <List
         key="flatlist"
-        style={styles.list}
         data={this.state.events}
         renderItem={({ item }) => <EventCard event={item} />}
         keyExtractor={(item) => item.id}
       />,
-      <ActionButton
-        key="fab"
-        onPress={this.handleAddEvent}
-        buttonColor="rgba(231, 76, 60, 1)"
-      />,
+      <ActionButton key="fab" onPress={this.handleAddEvent} buttonColor="rgba(231, 76, 60, 1)" />,
     ];
   }
 }
 
-export default EventList;
+const List = styled.FlatList`
+  flex: 1;
+  padding-top: 20px;
+  background-color: #f3f3f3;
+`;
